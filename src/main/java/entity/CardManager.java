@@ -35,7 +35,7 @@ public class CardManager {
      */
     public void updateAllProficiency(int change_value){
         for (Card c : cards) {
-            c.increaseProficiency(change_value);
+            c.changeProficiency(change_value);
         }
     }
 

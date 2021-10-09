@@ -71,7 +71,7 @@ public class Card {
      * Increase the proficiency with increase value
      * @param increase_value the increase value we want to add to the proficiency
      */
-    public void increaseProficiency(int increase_value){
+    public void changeProficiency(int increase_value){
         this.proficiency += increase_value;
     }
 
