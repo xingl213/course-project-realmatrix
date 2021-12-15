@@ -1,16 +1,13 @@
 package framework.gui.learn_review;
 
-import entity.Card;
-import entity.Pack;
-import entity.User;
 import framework.gui.BasicFrame;
 import framework.gui.card.CardListFrame;
+import framework.gui.database_error.DatabaseErrorWindow;
 import interface_adapter.controller.ReviewController;
 import interface_adapter.presenters.ReviewPresenter;
 import use_case.generator.ReviewGenerator;
 import use_case.input_boundaries.ProgramStateInputBoundary;
 import use_case.input_boundaries.ReviewInputBoundary;
-import use_case.manager.ProgramStateManager;
 import use_case.output_boundaries.ReviewOutputBoundary;
 
 import javax.swing.*;
@@ -106,6 +103,7 @@ public class ReviewFrame extends BasicFrame implements ActionListener {
             try {
                 reviewController.next();
             } catch (IOException ex) {
+                new DatabaseErrorWindow().presentWriteErrMsg();
                 ex.printStackTrace();
             }
             this.card.setText("<html><div style=\"width: 500\">" + reviewOutputBoundary.getCurrCardStrRep() + "</div><html>");
@@ -129,40 +127,5 @@ public class ReviewFrame extends BasicFrame implements ActionListener {
         }
     }
 
-    public static void main(String[] args) {
-        ProgramStateInputBoundary ps = new ProgramStateManager();
-        User user = new User("Runshi", "password");
-        Pack vocab = new Pack("vocab_new");
-        // each card appears at least (Constants.REVIEW_PROFICIENCY_MAX - card.getProficiency() + 1) times
-        // a card will appear again if you press "remember wrong" button (that's why "at least")
-        // example: c4 will appear 3-1+1=3 times. If you press "remember wrong" on that card twice (in two occurrences),
-        // c4 will appear a total of 5 times
-        // if you clicked on remember wrong/correctly and the text field doesn't change, that's not an error.
-        // that's simply because that card appears again right after (remember some cards will appear more than once)
-        // and yes we could improve this but right now it works
-        Card c1 = new Card("apple", "fruit");
-        c1.setProficiency(2);
-        Card c2 = new Card("banana", "another fruit");
-        c2.setProficiency(3);
-        Card c3 = new Card("bee", "animal");
-        c3.setProficiency(3);
-        Card c4 = new Card("long", "something very very LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG" +
-                " LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG" +
-                " LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG" +
-                " LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG " +
-                "LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG LONG" +
-                " LONG LONG LONG LONG LONG");
-        c4.setProficiency(1);
-        Card c5 = new Card("old", "something you have seen before");
-        c5.setProficiency(0);
-        vocab.addCard(c1);
-        vocab.addCard(c2);
-        vocab.addCard(c3);
-        vocab.addCard(c4);
-        vocab.addCard(c5);
-        user.addPackage(vocab);
-        ps.setCurrUser(user);
-        ps.setCurrPack("vocab_new");
-        new ReviewFrame(ps);
-    }
+
 }

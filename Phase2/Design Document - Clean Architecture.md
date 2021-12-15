@@ -32,8 +32,7 @@ they won't interact with concrete data writer/loader classes.
 2. Usecase Layer: it contains two parts, `Manager` and `Generator`, by which present what we can do with the entity in pure
 business logic and plain code.
     - Managers: `CardManager`, `PackManager`, and `UserManager`, take charge of `Card`, `Pack` and `User` respectively,
-   including creating, editing, sorting, searching and storing into a map. Furthermore, there is an interface called `Sort`
-   that is implemented by `CardManager` and `PackManager` to sort cards and packs in alphabetic and date added order. 
+   including creating, editing, sorting, searching and storing into a map.
    There is also an abstract called `Manager` that contains methods/attributes that are shared between specific managers.
    `ProgramStateManager` is a manager that manages to update current card/pack/user.
    **Throughout the program, there will only be one such manager.**
@@ -45,11 +44,12 @@ business logic and plain code.
 3. Interface Adapters Layer:
    - Take Controllers for an example, we set multiple controllers, **each controls a specific task**
    (e.g. `RegisterController` controls registration).
-   These controllers will be getting input from user command and instructing the usecase classes 
-   (but won't depend on usecase classes directly because of input boundaries). This layer shoulders the responsibility of
-   converting user inputs into the request model and passes to the use case, but have no access to views in the framework circle.
+   These controllers will be 
+   getting input from user command and
+   instructing the usecase classes 
+   (but won't depend on usecase classes directly because of input boundaries).
 
 4. Framework & Driver Layer:
-   - The GUI we built in phase2 only interact with the Interface Adapters Layer, and will not dependent on lower layers,
-   which satisfies the clean architecture principle
+   - Take GUI for an example, The GUI we built in phase2 only interact with the Interface Adapters Layer,
+   and will not dependent on lower layers, which satisfies the clean architecture principle.
 

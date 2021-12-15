@@ -1,7 +1,6 @@
 package interface_adapter.gateway.dataout;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -73,11 +72,5 @@ class Reader {
         return lst;
     }
 
-    // Testing purpose
-    public static void main(String[] args) throws IOException {
-        Reader reader = new Reader();
-        reader.readUsers();
-        Loader loader = new Loader();
-        System.out.println(loader.initialLoad());
-    }
+
 }
